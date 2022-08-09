@@ -1,5 +1,4 @@
 
-
 //create time element at top of page using moment
 var today = moment();
 $("#currentDay").text(today.format('MMMM Do YYYY, h:mm:ss a'));
@@ -10,14 +9,9 @@ let currentHour = moment().format("H");
 
 const saveBtnEl= $(".saveBtn");
 
-
-// to remember what was saved, you need to read from local storage when the page loads
-
 //create work hours array to get the schedule to display
-const workHours= [8,9,10,11,12,13,14,15,16,17,18,19,20]
-const workHoursTime= [8,9,10,11,12,1,2,3,4,5,6,7,8]
-
-let calendarEvent= [];
+const workHours= [8,9,10,11,12,13,14,15,16,17,18,19,20];
+const workHoursTime= [8,9,10,11,12,1,2,3,4,5,6,7,8];
 
 //function to display the work hours and elements within it 
 function displayAgenda(){
@@ -27,14 +21,14 @@ function displayAgenda(){
     //create elements using the let property 
         let rowEl = $("<div>");
         let hourEl = $("<p>");
-        let descriptionEl = $("<textarea>")
+        let descriptionEl = $("<textarea>");
         let saveBtnEl = $("<button>");
 
         //add the CSS properties to the newly created elements; use the column property from Bootstrap grid and width to adjust the fit to the page
         rowEl.addClass("row time-block");
         hourEl.addClass("hour col-1");
         descriptionEl.addClass("description w-100 p3 col 10");
-        saveBtnEl.addClass("saveBtn col-1")
+        saveBtnEl.addClass("saveBtn col-1");
 
         //use the work hours arrays to toggle AM/PM to display to the page
         if(workHours[i]>11){
