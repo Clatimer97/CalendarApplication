@@ -10,6 +10,7 @@ let currentHour = moment().format("H");
 
 const saveBtnEl= $(".saveBtn");
 
+
 // to remember what was saved, you need to read from local storage when the page loads
 
 //create work hours array to get the schedule to display
@@ -47,22 +48,22 @@ function displayAgenda(){
         //used a floppy disk emoji for the save button
         saveBtnEl.text("💾")
         descriptionEl.attr("data-text", i)
-        saveBtnEl.attr("data-but", i)
-        // connect button to save function
-        saveBtnEl.on('click', function (event){
+        saveBtnEl.attr("data-number", i)
+        // connect save button to an on click event that saves any input to local storage
+         saveBtnEl.on('click', function (event){
             console.log(event.target)
-            console.log($(event.target).siblings())
-            // var agendaEvent = descriptionEl.input 
-            // console.log(agendaEvent) // text is a method, you need to get the value
-            // var key = "agendaEvent" + i
-            // localStorage.setItem(key, agendaEvent);
- 
-            // printEvent(key, descriptionEl)
-            // do local storage stuff
-            // dsecriptionEl can be
-        })
+             console.log($(event.target).siblings())
+
+
+             var saveBtnEl= $(event.target)
+             var textEntry= saveBtnEl.siblings("textarea").val()
+             var number= saveBtnEl.data().number
+             console.log(number)
+            
+            localStorage.setItem(number, textEntry);
+
+         });
         
-        // descriptionEl.text("Enter Information Here!"); // here you're using .text method
 
         //appended all the child elements to the parent elements in order to create the timetable
         rowEl.append(hourEl);
@@ -85,18 +86,17 @@ function displayAgenda(){
 //calling the function to display the timetable
 displayAgenda();
 
+//used the ready event to scan local storage for any input and display it to the page even after it's been deleted or the page has been refreshed 
+$(document).ready(function() {
+   
+    for (var i=0; i<12; i++){
+    localStorage.getItem(i)
 
-function printEvent(localStorageKey, textAreaElement){
-    // no need parse because it's already a string
-    // use the right id when printing event
-   var savedEvent= localStorage.getItem(localStorageKey);
-    if(savedEvent !== null){
-        textAreaElement.text(savedEvent) // confirm this
+    let textarea= $(document).find("[data-text="+ i + "]")
+    console.log(textarea)
+    textarea.val(localStorage.getItem(i))
+    
+    console.log(typeof i)
     }
-
-    if(savedEvent == null){
-        return;
-    }
-};
-
-
+   
+  });
